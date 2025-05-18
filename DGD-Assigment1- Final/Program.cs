@@ -36,14 +36,6 @@ namespace DGD_Assigment1__Final
         {
             StartMenu startMenu = new StartMenu();
             startMenu.GameStartMenu();
-            Console.WriteLine("Tamagotchi is starting now!!!");
-            Console.Beep();
-            Console.Beep();
-            Console.Beep();
-            Console.Beep();
-            Thread.Sleep(1000);
-            Console.Clear();           
-
         }
 
         private string GetUserInput()
@@ -59,10 +51,31 @@ namespace DGD_Assigment1__Final
             return Console.ReadLine();
         }
 
-        private async Task ProcessUserChoice(string choice)
+        private async Task ProcessUserChoice(string userInput)
         {
-            // Use this to process any choice user makes
-            // Set _isRunning = false to exit the game
+            if (userInput == "1")
+            {
+                //It should open the pet adoptation page
+            }
+            else if (userInput == "2")
+            {
+                //It should show the current pets
+            }
+            else if (userInput == "3")
+            {
+                //It should show current pets and should allow user to take care of them(should open another page)
+            }
+            else if (userInput == "4")
+            {
+                _isRunning = false;
+            }
+            else
+            {
+                Console.Clear();
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("INVALID INPUT!!!");
+                Console.ForegroundColor = ConsoleColor.White;
+            }
         }
     }//CLASS
 }//NAMESPACE

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 
 namespace DGD_Assigment1__Final
 {
@@ -14,6 +15,13 @@ namespace DGD_Assigment1__Final
                 string userInput = Console.ReadLine();
                 if (userInput == "1")
                 {
+                    Console.WriteLine("Tamagotchi is starting now!!!");
+                    Console.Beep();
+                    Console.Beep();
+                    Console.Beep();
+                    Console.Beep();
+                    Thread.Sleep(1000);
+                    Console.Clear();
                     _isGameInitialized = true;
                 }
                 else if (userInput == "2")
