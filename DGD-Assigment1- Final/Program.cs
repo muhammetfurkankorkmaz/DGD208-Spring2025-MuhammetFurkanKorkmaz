@@ -11,10 +11,14 @@ namespace DGD_Assigment1__Final
     {
         private bool _isRunning;
 
+        PetHolder petHolderScript = new PetHolder();
+        AdoptationMenu adoptationMenuScript = new AdoptationMenu();
+        public event Action<PetType> onNewPetAdapt;
+
         static async Task Main(string[] args)
         {
-            Program program = new Program();
-            await program.GameLoop();
+            Program programScript = new Program();
+            await programScript.GameLoop();
         }
         public async Task GameLoop()
         {
@@ -36,6 +40,12 @@ namespace DGD_Assigment1__Final
         {
             StartMenu startMenu = new StartMenu();
             startMenu.GameStartMenu();
+
+
+            petHolderScript.DeclareProgram(this);
+
+
+            adoptationMenuScript.DeclareProgram(this);
         }
 
         private string GetUserInput()
@@ -56,10 +66,11 @@ namespace DGD_Assigment1__Final
             if (userInput == "1")
             {
                 //It should open the pet adoptation page
+                adoptationMenuScript.ShowAdoptationOptions();
             }
             else if (userInput == "2")
             {
-                //It should show the current pets
+                petHolderScript.ShowCurrentPets();
             }
             else if (userInput == "3")
             {
@@ -76,6 +87,11 @@ namespace DGD_Assigment1__Final
                 Console.WriteLine("INVALID INPUT!!!");
                 Console.ForegroundColor = ConsoleColor.White;
             }
+        }
+
+        public void AdoptPet(PetType petType)
+        {
+            onNewPetAdapt?.Invoke(petType);
         }
     }//CLASS
 }//NAMESPACE
