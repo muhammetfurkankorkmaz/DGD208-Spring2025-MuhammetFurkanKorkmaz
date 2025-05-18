@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Timers;
 
 namespace DGD_Assigment1__Final
 {
@@ -11,9 +9,12 @@ namespace DGD_Assigment1__Final
     {
         private bool _isRunning;
 
+        System.Timers.Timer petTimer;
+
         PetHolder petHolderScript = new PetHolder();
         AdoptationMenu adoptationMenuScript = new AdoptationMenu();
         public event Action<PetType> onNewPetAdapt;
+        public event Action onDecreaseStat;
 
         static async Task Main(string[] args)
         {
@@ -25,6 +26,12 @@ namespace DGD_Assigment1__Final
             Initialize();
 
             _isRunning = true;
+
+            petTimer = new System.Timers.Timer(1000); // 1000 ms = 1 second
+            petTimer.Elapsed += OnStatDecreaseTick;
+            petTimer.AutoReset = true;
+            petTimer.Enabled = true;
+
             while (_isRunning)
             {
                 // Display menu and get player input
@@ -33,7 +40,8 @@ namespace DGD_Assigment1__Final
                 // Process the player's choice
                 await ProcessUserChoice(userChoice);
             }
-
+            petTimer.Stop();
+            petTimer.Dispose();
             Console.WriteLine("Thanks for playing!");
         }
         private void Initialize()
@@ -66,10 +74,12 @@ namespace DGD_Assigment1__Final
             if (userInput == "1")
             {
                 //It should open the pet adoptation page
+                
                 adoptationMenuScript.ShowAdoptationOptions();
             }
             else if (userInput == "2")
             {
+                Console.Clear();
                 petHolderScript.ShowCurrentPets();
             }
             else if (userInput == "3")
@@ -93,5 +103,12 @@ namespace DGD_Assigment1__Final
         {
             onNewPetAdapt?.Invoke(petType);
         }
+
+        private  void OnStatDecreaseTick(Object source, ElapsedEventArgs e)
+        {
+            //Console.WriteLine("Stats are decreased");
+            onDecreaseStat?.Invoke();
+        }
+
     }//CLASS
 }//NAMESPACE

@@ -1,7 +1,8 @@
 ﻿public enum PetCondition
 {
+
     Happy,
-    Chill,
+    Chıll,
     Sad,
     Angry,
     Sick

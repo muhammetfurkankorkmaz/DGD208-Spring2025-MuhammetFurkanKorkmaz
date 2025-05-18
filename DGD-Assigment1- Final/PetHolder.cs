@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DGD_Assigment1__Final
 {
@@ -10,10 +7,13 @@ namespace DGD_Assigment1__Final
     {
         Program programScript;
 
+
+
         public void DeclareProgram(Program _programScript)
         {
             programScript = _programScript;
             programScript.onNewPetAdapt += CreatePet;
+            programScript.onDecreaseStat += ChangePetStats;
         }
 
         List<PetType> pets = new List<PetType>();
@@ -37,9 +37,23 @@ namespace DGD_Assigment1__Final
             }
         }
 
-        public void KillPet()
+        public void KillPet(Pet _petToKill)
         {
+            if (petScripts.Contains(_petToKill))
+            {
+                //Finds which one is and removes it
+                petScripts.Remove(_petToKill);
+                //pets.Remove();
+            }
+            currentPetAmount--;
+        }
 
+        void ChangePetStats()
+        {
+            for (int i = 0; i < pets.Count; i++)
+            {
+                petScripts[i].ChangePetsStats();
+            }
         }
 
     }

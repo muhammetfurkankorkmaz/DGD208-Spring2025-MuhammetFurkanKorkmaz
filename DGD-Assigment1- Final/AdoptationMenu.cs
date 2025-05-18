@@ -33,6 +33,7 @@ namespace DGD_Assigment1__Final
                 Console.WriteLine("6- Return to Main Menu");
 
                 string userInput = Console.ReadLine();
+                Console.Clear();
                 if (userInput == "1")
                 {
                     programScript.AdoptPet(PetType.Dragon);
