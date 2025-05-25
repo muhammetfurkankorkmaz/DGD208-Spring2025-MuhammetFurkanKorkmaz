@@ -14,7 +14,7 @@ namespace DGD_Assigment1__Final
         PetHolder petHolderScript = new PetHolder();
         AdoptationMenu adoptationMenuScript = new AdoptationMenu();
         public event Action<PetType> onNewPetAdapt;
-        public event Action onDecreaseStat;
+        public event Action onDecreaseStat; 
 
         static async Task Main(string[] args)
         {
@@ -42,7 +42,7 @@ namespace DGD_Assigment1__Final
             }
             petTimer.Stop();
             petTimer.Dispose();
-            Console.WriteLine("Thanks for playing!");
+            Console.WriteLine("Thanks for playing the Tamagotchi!");
         }
         private void Initialize()
         {
