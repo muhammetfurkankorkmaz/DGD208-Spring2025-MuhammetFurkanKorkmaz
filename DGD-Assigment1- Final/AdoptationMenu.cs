@@ -43,14 +43,14 @@ namespace DGD_Assigment1__Final
                 else if (userInput == "2")
                 {
                     programScript.AdoptPet(PetType.ThreeHeadedDog);
-                    Console.WriteLine("Three Headed Dog is adopted! So Cute!");
+                    Console.WriteLine("Three Headed Dog is adopted! Adorable!");
 
                     exitedAdoptationMenu = true;
                 }
                 else if (userInput == "3")
                 {
                     programScript.AdoptPet(PetType.Frog);
-                    Console.WriteLine("Frog is adopted! So Cute!");
+                    Console.WriteLine("Frog is adopted! Vrak!");
 
                     exitedAdoptationMenu = true;
                 }
@@ -58,14 +58,14 @@ namespace DGD_Assigment1__Final
                 {
 
                     programScript.AdoptPet(PetType.Tarantula);
-                    Console.WriteLine("Tarantula is adopted! So Cute!");
+                    Console.WriteLine("Tarantula is adopted! He has all 6 legs!");
                     exitedAdoptationMenu = true;
                 }
                 else if (userInput == "5")
                 {
 
                     programScript.AdoptPet(PetType.Giraffe);
-                    Console.WriteLine("Giraffe is adopted! So Cute!");
+                    Console.WriteLine("Giraffe is adopted! Definitely taller than you!");
                     exitedAdoptationMenu = true;
                 }
                 else if (userInput == "6")

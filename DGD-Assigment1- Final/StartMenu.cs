@@ -40,7 +40,7 @@ namespace DGD_Assigment1__Final
         void CreditsScreen()
         {
             Console.WriteLine("M. Furkan Korkmaz 225040043");
-            Console.WriteLine("Press any button to proceed.");
+            Console.WriteLine("Press enter to proceed.");
             Console.ReadLine();
             Console.Clear();
         }
