@@ -58,7 +58,7 @@ namespace DGD_Assigment1__Final
         {
             currentHunger++;
             currentSleep++;
-            currentJoy -= 0.5f;
+            currentJoy --;
 
             CalculateHappiness();
         }

@@ -65,21 +65,6 @@ namespace DGD_Assigment1__Final
 
         private async Task ProcessUserChoice(string userInput)
         {
-            //if (userInput == "1")
-            //{
-            //    var petTypeMenu = new Menu<PetType>("Select a Pet for Adoption", Enum.GetValues(typeof(PetType)).Cast<PetType>().ToList(), petType => petType.ToString());
-            //    PetType? selectedPetType = petTypeMenu.ShowAndGetSelection();
-            //    if (selectedPetType != null)
-            //    {
-            //        Console.WriteLine($"You have adopted a {selectedPetType}!");
-
-            //        AdoptPet(selectedPetType);
-            //    }
-            //    else
-            //    {
-            //        Console.WriteLine("No pet selected. Returning to the main menu.");
-            //    }
-            //}
             if (userInput == "1")
             {
                 var petTypeMenu = new Menu<PetType>("Select a Pet for Adoption", Enum.GetValues(typeof(PetType)).Cast<PetType>().ToList(), petType => petType.ToString());
@@ -105,7 +90,6 @@ namespace DGD_Assigment1__Final
             }
             else if (userInput == "3")
             {
-                //It should show current pets and should allow user to take care of them
                 await ViewPetsAndAvailableItems();
             }
             else if (userInput == "4")
@@ -134,7 +118,7 @@ namespace DGD_Assigment1__Final
         {
             if (petHolderScript.currentPetAmount == 0)
             {
-                Console.WriteLine("You have no pets yet. Adopt one first.");
+                Console.WriteLine("You have no pets. Adopt one first.");
                 Console.ReadKey();
                 return;
             }
@@ -195,7 +179,7 @@ namespace DGD_Assigment1__Final
 
             selectedPet.ApplyItemEffectToPet(selectedItem);
 
-            Console.WriteLine($"Effect applied! {selectedItem.AffectedStat} of {selectedPet.petType} is now .");
+            Console.WriteLine($"Effect applied! {selectedItem.AffectedStat} of {selectedPet.petType} is now changed.");
         }
 
     }//CLASS
