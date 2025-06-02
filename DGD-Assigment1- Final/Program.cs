@@ -13,7 +13,6 @@ namespace DGD_Assigment1__Final
         System.Timers.Timer petTimer;
 
         PetHolder petHolderScript = new PetHolder();
-        //AdoptationMenu adoptationMenuScript = new AdoptationMenu();
         public event Action<PetType> onNewPetAdapt;
         public event Action onDecreaseStat;
 
@@ -28,17 +27,15 @@ namespace DGD_Assigment1__Final
 
             _isRunning = true;
 
-            petTimer = new System.Timers.Timer(1000); // 1000 ms = 1 second
+            petTimer = new System.Timers.Timer(1000);
             petTimer.Elapsed += OnStatDecreaseTick;
             petTimer.AutoReset = true;
             petTimer.Enabled = true;
 
             while (_isRunning)
             {
-                // Display menu and get player input
                 string userChoice = GetUserInput();
 
-                // Process the player's choice
                 await ProcessUserChoice(userChoice);
             }
             petTimer.Stop();
@@ -50,11 +47,7 @@ namespace DGD_Assigment1__Final
             StartMenu startMenu = new StartMenu();
             startMenu.GameStartMenu();
 
-
             petHolderScript.DeclareProgram(this);
-
-
-            //adoptationMenuScript.DeclareProgram(this);
         }
 
         private string GetUserInput()
@@ -72,21 +65,39 @@ namespace DGD_Assigment1__Final
 
         private async Task ProcessUserChoice(string userInput)
         {
+            //if (userInput == "1")
+            //{
+            //    var petTypeMenu = new Menu<PetType>("Select a Pet for Adoption", Enum.GetValues(typeof(PetType)).Cast<PetType>().ToList(), petType => petType.ToString());
+            //    PetType? selectedPetType = petTypeMenu.ShowAndGetSelection();
+            //    if (selectedPetType != null)
+            //    {
+            //        Console.WriteLine($"You have adopted a {selectedPetType}!");
+
+            //        AdoptPet(selectedPetType);
+            //    }
+            //    else
+            //    {
+            //        Console.WriteLine("No pet selected. Returning to the main menu.");
+            //    }
+            //}
             if (userInput == "1")
             {
                 var petTypeMenu = new Menu<PetType>("Select a Pet for Adoption", Enum.GetValues(typeof(PetType)).Cast<PetType>().ToList(), petType => petType.ToString());
-                PetType selectedPetType = petTypeMenu.ShowAndGetSelection();
-                if (selectedPetType != null && selectedPetType != 0)
-                {
-                    Console.WriteLine($"You have adopted a {selectedPetType}!");
 
-                    AdoptPet(selectedPetType);
+                PetType? selectedPetType = petTypeMenu.ShowAndGetSelection();
+
+                if (!petTypeMenu.isChoosen)
+                {
+                    Console.WriteLine("You chose to cancel the adoption. Returning to the main menu.");
                 }
                 else
                 {
-                    Console.WriteLine("No pet selected. Returning to the main menu.");
+                    PetType petToAdopt = selectedPetType.Value;
+                    AdoptPet(petToAdopt);
+                    Console.WriteLine($"You have adopted a {petToAdopt}!");
                 }
             }
+
             else if (userInput == "2")
             {
                 Console.Clear();
@@ -117,7 +128,6 @@ namespace DGD_Assigment1__Final
 
         private void OnStatDecreaseTick(Object source, ElapsedEventArgs e)
         {
-            //Console.WriteLine("Stats are decreased");
             onDecreaseStat?.Invoke();
         }
         private async Task ViewPetsAndAvailableItems()
@@ -128,8 +138,6 @@ namespace DGD_Assigment1__Final
                 Console.ReadKey();
                 return;
             }
-
-            // Step 2: Let the user select a pet
             Pet selectedPet = await GetPetSelection();
 
             if (selectedPet == null)
@@ -144,8 +152,6 @@ namespace DGD_Assigment1__Final
                 Console.WriteLine("No item selected. Going back...");
                 return;
             }
-
-            // Step 4: Use the selected item on the pet
             await UseItemOnPet(selectedPet, selectedItem);
         }
 

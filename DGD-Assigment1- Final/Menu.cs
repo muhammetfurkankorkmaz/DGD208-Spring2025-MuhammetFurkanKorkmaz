@@ -16,6 +16,7 @@ public class Menu<T>
     /// <param name="title">The title to display at the top of the menu</param>
     /// <param name="items">The list of items to display in the menu</param>
     /// <param name="displaySelector">A function that determines how each item is displayed</param>
+    public bool isChoosen { get; private set; } = false;
     public Menu(string title, List<T> items, Func<T, string> displaySelector)
     {
         _title = title;
@@ -33,6 +34,7 @@ public class Menu<T>
         {
             Console.WriteLine($"No items available in {_title}. Press any key to continue...");
             Console.ReadKey();
+            isChoosen = false;
             return default;
         }
 
@@ -61,11 +63,16 @@ public class Menu<T>
             {
                 // Check for "Go Back" option
                 if (selection == 0)
+                {
+                    isChoosen = false;
                     return default; // Return default value of T to indicate backing out
+
+                }
 
                 // Check if selection is valid
                 if (selection > 0 && selection <= _items.Count)
                 {
+                    isChoosen = true;
                     return _items[selection - 1];
                 }
             }
@@ -74,4 +81,4 @@ public class Menu<T>
             Console.ReadKey();
         }
     }
-}
+}//Class
