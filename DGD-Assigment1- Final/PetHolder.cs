@@ -8,7 +8,6 @@ namespace DGD_Assigment1__Final
         Program programScript;
 
 
-
         public void DeclareProgram(Program _programScript)
         {
             programScript = _programScript;
@@ -16,10 +15,9 @@ namespace DGD_Assigment1__Final
             programScript.onDecreaseStat += ChangePetStats;
         }
 
-        //List<PetType> pets = new List<PetType>();
         List<Pet> petScripts = new List<Pet>();
 
-        int currentPetAmount = 0;
+        public int currentPetAmount { get;private set; } = 0;
 
         public void CreatePet(PetType newPetType)
         {
@@ -44,9 +42,7 @@ namespace DGD_Assigment1__Final
         {
             if (petScripts.Contains(_petToKill))
             {
-                //Finds which one is and removes it
                 petScripts.Remove(_petToKill);
-                //pets.Remove();
             }
             currentPetAmount--;
         }
@@ -58,6 +54,9 @@ namespace DGD_Assigment1__Final
                 petScripts[i].ChangePetsStats();
             }
         }
-
+        public List<Pet> GetPets()
+        {
+            return petScripts;
+        }
     }
-}
+}//Class

@@ -47,6 +47,7 @@
     <Compile Include="Item.cs" />
     <Compile Include="ItemDatabase.cs" />
     <Compile Include="ItemType.cs" />
+    <Compile Include="Menu.cs" />
     <Compile Include="Pet.cs" />
     <Compile Include="PetCondition.cs" />
     <Compile Include="PetHolder.cs" />

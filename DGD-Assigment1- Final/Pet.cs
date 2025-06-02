@@ -8,71 +8,64 @@ namespace DGD_Assigment1__Final
 {
     internal class Pet
     {
-        PetType petType;
+        public PetType petType { get; private set; }
         PetCondition petCondition;
 
         public PetHolder petHolderScript;
 
-        bool isAlive = true;
 
-        float maxHunger = 100;
-        float currentHunger;
-        float maxDirtiness = 100;
-        float currentDirtiness;
-        float maxHappiness = 100;
-        float currentHappiness;
-        float maxJoy = 100;
-        float currentJoy;
+        public float currentHunger { get; private set; }
 
+        public float currentJoy { get; private set; }
 
+        public float currentSleep { get; private set; }
+
+        public float currentHappiness { get; private set; }
 
 
         public void InitializePet(PetType _petType)
         {
             petType = _petType;
 
-            currentHunger = 20;
-            currentDirtiness = 20;
+            currentHunger = 40;
+            currentSleep = 40;
             currentJoy = 50;
         }
         public void ReturnPetData()
         {
-            Console.WriteLine(petType + " -> Hunger :" + currentHunger + " Dirtiness : " + currentDirtiness + " Joy : " + currentJoy);
+            Console.WriteLine(petType + " -> Hunger :" + currentHunger + " Sleep: " + currentSleep + " Joy : " + currentJoy);
             Console.WriteLine(petType + " is " + petCondition.ToString().ToUpper());
+        }
+
+        public void ApplyItemEffectToPet(Item selectedItem)
+        {
+            switch (selectedItem.AffectedStat)
+            {
+                case PetStat.Hunger:
+                    currentHunger = Math.Min(currentHunger - selectedItem.EffectAmount, 100);
+                    break;
+                case PetStat.Sleep:
+                    currentSleep = Math.Min(currentSleep - selectedItem.EffectAmount, 100);
+                    break;
+                case PetStat.Fun:
+                    currentJoy = Math.Min(currentJoy + selectedItem.EffectAmount, 100);
+                    break;
+            }
+            Console.WriteLine("Items are applied");
         }
 
         public void ChangePetsStats()
         {
-            if (currentHunger + 1 < maxHunger)
-            {
-                currentHunger++;
-            }
-            else
-            {
-                currentHunger = maxHunger;
-            }
-            if (currentDirtiness + 1 < maxDirtiness)
-            {
-                currentDirtiness++;
-            }
-            else
-            {
-                currentDirtiness = maxDirtiness;
-            }
-            if (currentJoy - 0.5f > 0)
-            {
-                currentJoy -= 0.5f;
-            }
-            else
-            {
-                currentJoy = 0;
-            }
+            currentHunger++;
+            currentSleep++;
+            currentJoy -= 0.5f;
+
             CalculateHappiness();
         }
         void CalculateHappiness()
         {
-            //%40 hunger + %20 of dirtiness + %40 joy
-            float happiness = (100 - currentHunger) * 0.4f + (100 - currentDirtiness) * 0.2f + currentJoy * 0.4f;
+            //%40 hunger + %20 of Sleep + %40 joy
+            float happiness = (100 - currentHunger) * 0.4f + (100 - currentSleep) * 0.2f + currentJoy * 0.4f;
 
             if (happiness >= 80)
             {

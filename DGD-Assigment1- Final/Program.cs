@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Timers;
@@ -14,7 +15,7 @@ namespace DGD_Assigment1__Final
         PetHolder petHolderScript = new PetHolder();
         AdoptationMenu adoptationMenuScript = new AdoptationMenu();
         public event Action<PetType> onNewPetAdapt;
-        public event Action onDecreaseStat; 
+        public event Action onDecreaseStat;
 
         static async Task Main(string[] args)
         {
@@ -74,7 +75,7 @@ namespace DGD_Assigment1__Final
             if (userInput == "1")
             {
                 //It should open the pet adoptation page
-                
+
                 adoptationMenuScript.ShowAdoptationOptions();
             }
             else if (userInput == "2")
@@ -84,7 +85,8 @@ namespace DGD_Assigment1__Final
             }
             else if (userInput == "3")
             {
-                //It should show current pets and should allow user to take care of them(should open another page)
+                //It should show current pets and should allow user to take care of them
+                await ViewPetsAndAvailableItems();
             }
             else if (userInput == "4")
             {
@@ -104,10 +106,81 @@ namespace DGD_Assigment1__Final
             onNewPetAdapt?.Invoke(petType);
         }
 
-        private  void OnStatDecreaseTick(Object source, ElapsedEventArgs e)
+        private void OnStatDecreaseTick(Object source, ElapsedEventArgs e)
         {
             //Console.WriteLine("Stats are decreased");
             onDecreaseStat?.Invoke();
+        }
+        private async Task ViewPetsAndAvailableItems()
+        {
+            if (petHolderScript.currentPetAmount == 0)
+            {
+                Console.WriteLine("You have no pets yet. Adopt one first.");
+                Console.ReadKey();
+                return;
+            }
+
+            // Step 2: Let the user select a pet
+            Pet selectedPet = await GetPetSelection();
+
+            if (selectedPet == null)
+            {
+                Console.WriteLine("No pet selected. Going back...");
+                return;
+            }
+            Item selectedItem = await GetItemSelectionForPet(selectedPet);
+
+            if (selectedItem == null)
+            {
+                Console.WriteLine("No item selected. Going back...");
+                return;
+            }
+
+            // Step 4: Use the selected item on the pet
+            await UseItemOnPet(selectedPet, selectedItem);
+        }
+
+        private async Task<Pet> GetPetSelection()
+        {
+            var petMenu = new Menu<Pet>(
+                "Select a Pet",
+                petHolderScript.GetPets(),
+                pet => $"{pet.petType} - Hunger: {pet.currentHunger}, Sleep: {pet.currentSleep}, Fun: {pet.currentHappiness}"
+            );
+
+            return petMenu.ShowAndGetSelection(); 
+        }
+
+        private async Task<Item> GetItemSelectionForPet(Pet selectedPet)
+        {
+            var availableItems = ItemDatabase.AllItems
+                .Where(item => item.CompatibleWith.Contains(selectedPet.petType))
+                .ToList();
+
+            if (availableItems.Count == 0)
+            {
+                Console.WriteLine($"No items available for {selectedPet.petType}.");
+                return null; 
+            }
+
+            var itemMenu = new Menu<Item>(
+                "Select an Item",
+                availableItems,
+                item => $"{item.Name} - Affects {item.AffectedStat} (+{item.EffectAmount})"
+            );
+
+            return itemMenu.ShowAndGetSelection(); 
+        }
+
+        private async Task UseItemOnPet(Pet selectedPet, Item selectedItem)
+        {
+            Console.WriteLine($"You are using {selectedItem.Name} on {selectedPet.petType}.");
+
+            await Task.Delay((int)(selectedItem.Duration * 1000));
+
+            selectedPet.ApplyItemEffectToPet(selectedItem);
+
+            Console.WriteLine($"Effect applied! {selectedItem.AffectedStat} of {selectedPet.petType} is now .");
         }
 
     }//CLASS
