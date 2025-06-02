@@ -11,6 +11,8 @@ namespace DGD_Assigment1__Final
         PetType petType;
         PetCondition petCondition;
 
+        public PetHolder petHolderScript;
+
         bool isAlive = true;
 
         float maxHunger = 100;
@@ -38,19 +40,7 @@ namespace DGD_Assigment1__Final
             Console.WriteLine(petType + " -> Hunger :" + currentHunger + " Dirtiness : " + currentDirtiness + " Joy : " + currentJoy);
             Console.WriteLine(petType + " is " + petCondition.ToString().ToUpper());
         }
-        public void FeedPet()
-        {
 
-        }
-
-        public void BathePet()
-        {
-
-        }
-        public void PlayWithPet()
-        {
-
-        }
         public void ChangePetsStats()
         {
             if (currentHunger + 1 < maxHunger)
@@ -83,7 +73,7 @@ namespace DGD_Assigment1__Final
         {
             //%40 hunger + %20 of dirtiness + %40 joy
             float happiness = (100 - currentHunger) * 0.4f + (100 - currentDirtiness) * 0.2f + currentJoy * 0.4f;
-            
+
             if (happiness >= 80)
             {
                 petCondition = PetCondition.Happy;
@@ -114,7 +104,7 @@ namespace DGD_Assigment1__Final
                 if (petCondition != PetCondition.Sick)
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("HOLY MOLY!"+ petType + " IS SICK NOW");
+                    Console.WriteLine("HOLY MOLY!" + petType + " IS SICK NOW");
                     Console.WriteLine("YOU BETTER TAKE CARE OF IT!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
                     Console.ForegroundColor = ConsoleColor.White;
                 }
@@ -123,7 +113,7 @@ namespace DGD_Assigment1__Final
             }
             else
             {
-                //Kill the pet
+                petHolderScript.KillPet(this);
             }
 
         }

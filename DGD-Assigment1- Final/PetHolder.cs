@@ -16,25 +16,28 @@ namespace DGD_Assigment1__Final
             programScript.onDecreaseStat += ChangePetStats;
         }
 
-        List<PetType> pets = new List<PetType>();
+        //List<PetType> pets = new List<PetType>();
         List<Pet> petScripts = new List<Pet>();
 
         int currentPetAmount = 0;
 
         public void CreatePet(PetType newPetType)
         {
-            pets.Add(newPetType);
-            petScripts.Add(new Pet());
+            Pet _pet = new Pet();
+            _pet.petHolderScript = this;
+
+            petScripts.Add(_pet);
             petScripts[currentPetAmount].InitializePet(newPetType);
             currentPetAmount++;
         }
 
         public void ShowCurrentPets()
         {
-            for (int i = 0; i < pets.Count; i++)
+            for (int i = 0; i < petScripts.Count; i++)
             {
                 petScripts[i].ReturnPetData();
             }
+            Console.WriteLine(" ");
         }
 
         public void KillPet(Pet _petToKill)
@@ -50,7 +53,7 @@ namespace DGD_Assigment1__Final
 
         void ChangePetStats()
         {
-            for (int i = 0; i < pets.Count; i++)
+            for (int i = 0; i < petScripts.Count; i++)
             {
                 petScripts[i].ChangePetsStats();
             }
