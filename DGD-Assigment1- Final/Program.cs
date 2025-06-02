@@ -69,7 +69,7 @@ namespace DGD_Assigment1__Final
             {
                 var petTypeMenu = new Menu<PetType>("Select a Pet for Adoption", Enum.GetValues(typeof(PetType)).Cast<PetType>().ToList(), petType => petType.ToString());
 
-                PetType? selectedPetType = petTypeMenu.ShowAndGetSelection();
+                PetType? selectedPetType = petTypeMenu.ShowAndGetSelection(); 
 
                 if (!petTypeMenu.isChoosen)
                 {
