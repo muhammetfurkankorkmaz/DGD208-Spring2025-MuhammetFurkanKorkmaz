@@ -13,7 +13,7 @@ namespace DGD_Assigment1__Final
         System.Timers.Timer petTimer;
 
         PetHolder petHolderScript = new PetHolder();
-        AdoptationMenu adoptationMenuScript = new AdoptationMenu();
+        //AdoptationMenu adoptationMenuScript = new AdoptationMenu();
         public event Action<PetType> onNewPetAdapt;
         public event Action onDecreaseStat;
 
@@ -54,7 +54,7 @@ namespace DGD_Assigment1__Final
             petHolderScript.DeclareProgram(this);
 
 
-            adoptationMenuScript.DeclareProgram(this);
+            //adoptationMenuScript.DeclareProgram(this);
         }
 
         private string GetUserInput()
@@ -74,9 +74,18 @@ namespace DGD_Assigment1__Final
         {
             if (userInput == "1")
             {
-                //It should open the pet adoptation page
+                var petTypeMenu = new Menu<PetType>("Select a Pet for Adoption", Enum.GetValues(typeof(PetType)).Cast<PetType>().ToList(), petType => petType.ToString());
+                PetType selectedPetType = petTypeMenu.ShowAndGetSelection();
+                if (selectedPetType != null && selectedPetType != 0)
+                {
+                    Console.WriteLine($"You have adopted a {selectedPetType}!");
 
-                adoptationMenuScript.ShowAdoptationOptions();
+                    AdoptPet(selectedPetType);
+                }
+                else
+                {
+                    Console.WriteLine("No pet selected. Returning to the main menu.");
+                }
             }
             else if (userInput == "2")
             {
@@ -148,7 +157,7 @@ namespace DGD_Assigment1__Final
                 pet => $"{pet.petType} - Hunger: {pet.currentHunger}, Sleep: {pet.currentSleep}, Fun: {pet.currentHappiness}"
             );
 
-            return petMenu.ShowAndGetSelection(); 
+            return petMenu.ShowAndGetSelection();
         }
 
         private async Task<Item> GetItemSelectionForPet(Pet selectedPet)
@@ -160,7 +169,7 @@ namespace DGD_Assigment1__Final
             if (availableItems.Count == 0)
             {
                 Console.WriteLine($"No items available for {selectedPet.petType}.");
-                return null; 
+                return null;
             }
 
             var itemMenu = new Menu<Item>(
@@ -169,7 +178,7 @@ namespace DGD_Assigment1__Final
                 item => $"{item.Name} - Affects {item.AffectedStat} (+{item.EffectAmount})"
             );
 
-            return itemMenu.ShowAndGetSelection(); 
+            return itemMenu.ShowAndGetSelection();
         }
 
         private async Task UseItemOnPet(Pet selectedPet, Item selectedItem)
