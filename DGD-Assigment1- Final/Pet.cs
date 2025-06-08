@@ -27,8 +27,8 @@ namespace DGD_Assigment1__Final
         {
             petType = _petType;
 
-            currentHunger = 40;
-            currentSleep = 40;
+            currentHunger = 50;
+            currentSleep = 50;
             currentJoy = 50;
         }
         public void ReturnPetData()
@@ -42,10 +42,10 @@ namespace DGD_Assigment1__Final
             switch (selectedItem.AffectedStat)
             {
                 case PetStat.Hunger:
-                    currentHunger = Math.Min(currentHunger - selectedItem.EffectAmount, 100);
+                    currentHunger = Math.Min(currentHunger + selectedItem.EffectAmount, 100);
                     break;
                 case PetStat.Sleep:
-                    currentSleep = Math.Min(currentSleep - selectedItem.EffectAmount, 100);
+                    currentSleep = Math.Min(currentSleep + selectedItem.EffectAmount, 100);
                     break;
                 case PetStat.Fun:
                     currentJoy = Math.Min(currentJoy + selectedItem.EffectAmount, 100);
@@ -56,8 +56,8 @@ namespace DGD_Assigment1__Final
 
         public void ChangePetsStats()
         {
-            currentHunger++;
-            currentSleep++;
+            currentHunger--;
+            currentSleep--;
             currentJoy --;
 
             CalculateHappiness();
@@ -65,17 +65,17 @@ namespace DGD_Assigment1__Final
         void CalculateHappiness()
         {
             //%40 hunger + %20 of Sleep + %40 joy
-            float happiness = (100 - currentHunger) * 0.4f + (100 - currentSleep) * 0.2f + currentJoy * 0.4f;
+            float happiness =  currentHunger * 0.4f + currentSleep * 0.2f + currentJoy * 0.4f;
 
-            if (happiness >= 80)
+            if (happiness >= 70)
             {
                 petCondition = PetCondition.Happy;
             }
-            else if (happiness < 80 && happiness >= 60)
+            else if (happiness < 70 && happiness >= 45)
             {
                 petCondition = PetCondition.Chıll;
             }
-            else if (happiness < 60 && happiness >= 40)
+            else if (happiness < 45 && happiness >= 30)
             {
                 if (petCondition != PetCondition.Angry)
                 {
@@ -83,7 +83,7 @@ namespace DGD_Assigment1__Final
                 }
                 petCondition = PetCondition.Angry;
             }
-            else if (happiness < 40 && happiness >= 20)
+            else if (happiness < 30 && happiness >= 10)
             {
                 if (petCondition != PetCondition.Sad)
                 {
@@ -91,9 +91,8 @@ namespace DGD_Assigment1__Final
                 }
                 petCondition = PetCondition.Sad;
             }
-            else if (happiness < 40 && happiness >= 1)
+            else if (happiness < 10 && happiness >= 1)
             {
-
                 if (petCondition != PetCondition.Sick)
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
